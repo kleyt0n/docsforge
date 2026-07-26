@@ -1,0 +1,9 @@
+# Code owners are requested for review on any pull request touching their paths.
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owner for everything in the repo.
+*       @my-org
+
+# Docs-specific owners, if you want a separate reviewer for content.
+# /docs/          @my-org/docs
+# mkdocs.yml      @my-org/docs

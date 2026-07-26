@@ -1,0 +1,426 @@
+/* ================================================================== *
+ * Professional docs template — a flat, monospace, terminal-styled     *
+ * theme (IBM Plex Mono everywhere) layered over Material for MkDocs.  *
+ *                                                                     *
+ * Everything is namespaced `--site-*` / `.site-*`, so it never        *
+ * collides with Material (`md-`) or mkdocstrings (`doc-`) classes.    *
+ *                                                                     *
+ * To rebrand: change --md-accent-fg-color below and (optionally) the  *
+ * `slate` background ramp. Nothing else is color-specific.            *
+ * ================================================================== */
+
+:root {
+  /* The one knob most projects need to touch. */
+  --md-accent-fg-color: #4f46e5;
+
+  /* Light-scheme chrome. */
+  --site-border: rgba(0, 0, 0, 0.12);
+  --site-border-strong: rgba(0, 0, 0, 0.24);
+  --site-hover: rgba(0, 0, 0, 0.04);
+}
+
+/* Monospace, crisp, terminal-ish rendering. */
+body,
+.md-typeset,
+.md-nav,
+.md-header,
+.md-footer,
+input,
+button {
+  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-feature-settings: normal;
+  -webkit-font-smoothing: antialiased;
+}
+
+.md-typeset {
+  line-height: 1.7;
+  font-size: 0.76rem;
+}
+
+/* ------------------------------------------------------------------ *
+ * True-black dark scheme.                                             *
+ * ------------------------------------------------------------------ */
+[data-md-color-scheme="slate"] {
+  --md-hue: 0;
+  --md-default-bg-color: #0a0a0a;
+  --md-default-bg-color--light: #0d0d0d;
+  --md-default-bg-color--lighter: #141413;
+  --md-default-bg-color--lightest: #1a1a19;
+  --md-code-bg-color: #101010;
+  --md-code-fg-color: #e6e6e6;
+  --md-footer-bg-color: #000000;
+  --md-footer-bg-color--dark: #000000;
+  --md-default-fg-color--lightest: rgba(255, 255, 255, 0.1);
+
+  --site-border: rgba(255, 255, 255, 0.12);
+  --site-border-strong: rgba(255, 255, 255, 0.2);
+  --site-hover: rgba(255, 255, 255, 0.04);
+}
+
+/* ------------------------------------------------------------------ *
+ * Structural chrome — borders that frame the columns like a TUI.      *
+ * ------------------------------------------------------------------ */
+.md-header {
+  background-color: #000;
+  border-bottom: 1px solid var(--site-border);
+  box-shadow: none;
+}
+.md-footer {
+  background-color: #000;
+  border-top: 1px solid var(--site-border);
+}
+.md-footer-meta {
+  background-color: #000;
+  font-size: 0.68rem;
+}
+
+/* Sidebar / TOC column dividers. */
+@media screen and (min-width: 76.25em) {
+  .md-sidebar--primary {
+    border-right: 1px solid var(--site-border);
+  }
+  .md-sidebar--secondary {
+    border-left: 1px solid var(--site-border);
+  }
+}
+
+/* Header title + search, squared off. */
+.md-header__title {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.md-search__form {
+  border-radius: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background-color: rgba(255, 255, 255, 0.04);
+  box-shadow: none;
+}
+.md-search__input {
+  border-radius: 0;
+}
+[data-md-toggle="search"]:checked ~ .md-header .md-search__output,
+.md-search__output {
+  border-radius: 0;
+}
+
+/* Header logo: thin line-art, so scale it up and add a faint glow. */
+.md-header__button.md-logo {
+  padding: 0.2rem;
+  margin: 0.1rem 0.2rem 0.1rem 0;
+}
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 1.9rem;
+  width: 1.9rem;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.35))
+          drop-shadow(0 0 1px rgba(255, 255, 255, 0.9));
+}
+
+/* ------------------------------------------------------------------ *
+ * Navigation — flat labels, boxed active item.                        *
+ * ------------------------------------------------------------------ */
+.md-nav {
+  font-size: 0.72rem;
+}
+.md-nav__title {
+  font-weight: 700;
+}
+
+/* Section labels (Getting started / User guide / API reference). */
+.md-nav__item--section > .md-nav__link,
+.md-nav--primary .md-nav__item--section > label.md-nav__link {
+  color: var(--md-default-fg-color);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.66rem;
+  opacity: 0.9;
+  margin-top: 0.5rem;
+}
+
+/* Links: quieter, squared hover box. */
+.md-nav__link {
+  border-radius: 0;
+  transition: background-color 100ms ease, color 100ms ease;
+}
+.md-nav__link:hover {
+  color: var(--md-default-fg-color);
+  background-color: var(--site-hover);
+}
+.md-nav__link--active,
+.md-nav__link--active:focus,
+.md-nav__link--active:hover,
+.md-nav__item .md-nav__link--active {
+  color: var(--md-default-fg-color);
+  font-weight: 700;
+  background-color: var(--md-default-fg-color--lightest);
+  box-shadow: inset 3px 0 0 var(--md-accent-fg-color);
+  padding-left: 0.9rem;
+}
+
+/* TOC ("On this page") heading. */
+.md-nav--secondary .md-nav__title {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.66rem;
+  font-weight: 700;
+}
+
+/* ------------------------------------------------------------------ *
+ * Typography — mono headings, subtle underlined links.                *
+ * ------------------------------------------------------------------ */
+.md-typeset h1 {
+  font-weight: 700;
+  font-size: 2rem;
+  letter-spacing: 0;
+  color: var(--md-default-fg-color);
+  margin-bottom: 0.3rem;
+}
+.md-typeset h2 {
+  font-weight: 700;
+  font-size: 1.35rem;
+  letter-spacing: 0;
+  margin-top: 2.4em;
+  padding-top: 1em;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+}
+.md-typeset h3 {
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0;
+}
+.md-typeset h4 {
+  font-weight: 700;
+}
+
+/* Inline links: thin underline, accent on hover. */
+.md-typeset a {
+  color: var(--md-default-fg-color);
+  text-decoration: underline;
+  text-decoration-color: var(--site-border-strong);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: color 100ms ease, text-decoration-color 100ms ease;
+}
+.md-typeset a:hover {
+  color: var(--md-accent-fg-color);
+  text-decoration-color: var(--md-accent-fg-color);
+}
+.md-typeset .headerlink,
+.md-nav__link,
+.md-typeset .md-button {
+  text-decoration: none;
+}
+
+/* ------------------------------------------------------------------ *
+ * Surfaces — everything square and flat.                              *
+ * ------------------------------------------------------------------ */
+.md-typeset pre > code,
+.md-typeset code {
+  border-radius: 0;
+}
+.md-typeset code {
+  font-size: 0.86em;
+  padding: 0.1em 0.35em;
+}
+.md-typeset .highlight,
+.md-typeset pre > code {
+  border: 1px solid var(--site-border);
+}
+
+.md-typeset table:not([class]) {
+  border: 1px solid var(--site-border);
+  border-radius: 0;
+  overflow: hidden;
+  font-size: 0.72rem;
+}
+.md-typeset table:not([class]) th {
+  font-weight: 700;
+  background: var(--site-hover);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.68rem;
+}
+
+.md-typeset img {
+  border-radius: 0;
+}
+.md-typeset figure img,
+.md-typeset p > img:not(.site-hero__logo) {
+  border: 1px solid var(--site-border);
+  box-shadow: none;
+}
+.md-typeset figcaption {
+  color: var(--md-default-fg-color--light);
+  font-size: 0.7rem;
+  margin-top: 0.4em;
+}
+
+.md-typeset .admonition,
+.md-typeset details {
+  border-radius: 0;
+  border: 1px solid var(--site-border);
+  border-left-width: 3px;
+  font-size: 0.72rem;
+  box-shadow: none;
+}
+
+/* Content buttons flat. */
+.md-typeset .md-button {
+  border-radius: 0;
+}
+
+/* mkdocstrings signatures. */
+.md-typeset .doc-signature > pre {
+  border-radius: 0;
+}
+
+/* ================================================================== *
+ * Home hero — flat, monospace, always dark so a white logo reads.     *
+ * Markup lives in docs/index.md.                                      *
+ * ================================================================== */
+.site-hero {
+  position: relative;
+  text-align: center;
+  margin: 0.5rem 0 2.5rem;
+  padding: 3.2rem 1.5rem 3rem;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(120% 140% at 50% -10%, rgba(255, 255, 255, 0.14), transparent 55%),
+    linear-gradient(180deg, #121212 0%, #0a0a0a 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Terminal grid texture behind the hero. */
+.site-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(70% 70% at 50% 40%, #000 30%, transparent 100%);
+  -webkit-mask-image: radial-gradient(70% 70% at 50% 40%, #000 30%, transparent 100%);
+}
+
+.site-hero__logo {
+  width: 104px;
+  height: 104px;
+  margin: 0 auto 0.6rem;
+  border: none !important;
+  box-shadow: none !important;
+  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.35))
+          drop-shadow(0 0 2px rgba(255, 255, 255, 0.7));
+}
+
+.md-typeset .site-hero__title {
+  margin: 0.2rem 0 0;
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  color: #fff;
+  border-top: none;
+  padding-top: 0;
+}
+.md-typeset .site-hero__title .headerlink {
+  display: none;
+}
+
+.site-hero__tagline {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.68);
+  max-width: 38rem;
+  margin: 1rem auto 1.5rem;
+}
+
+.site-badges {
+  margin: 0 0 1.6rem;
+}
+.site-badges img {
+  border: none !important;
+  box-shadow: none !important;
+  margin: 0 3px;
+  vertical-align: middle;
+}
+
+/* Flat, terminal-style hero buttons. */
+.site-hero .md-button {
+  margin: 0.3rem 0.35rem;
+  border-radius: 0;
+  font-weight: 700;
+  box-shadow: none;
+  transition: background-color 100ms ease, color 100ms ease, border-color 100ms ease;
+}
+.site-hero .md-button--primary {
+  background: var(--md-accent-fg-color);
+  border-color: var(--md-accent-fg-color);
+  color: #fff;
+}
+.site-hero .md-button--primary:hover {
+  background: #fff;
+  border-color: #fff;
+  color: #0a0a0a;
+}
+.site-hero .md-button:not(.md-button--primary) {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.site-hero .md-button:not(.md-button--primary):hover {
+  background: #fff;
+  border-color: #fff;
+  color: #0a0a0a;
+}
+
+.site-hero + h2 {
+  border-top: none;
+  margin-top: 1rem;
+  padding-top: 0;
+}
+
+@media screen and (max-width: 44.9375em) {
+  .site-hero { padding: 2.4rem 1rem; }
+  .site-hero__logo { width: 80px; height: 80px; }
+  .md-typeset .site-hero__title { font-size: 2.2rem; }
+}
+
+/* ------------------------------------------------------------------ *
+ * Feature grid — flat bordered cards. Auto-fits 1–3 columns.          *
+ * ------------------------------------------------------------------ */
+.site-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1px;
+  margin: 1.5rem 0;
+  background: var(--site-border);
+  border: 1px solid var(--site-border);
+}
+.site-card {
+  padding: 1.1rem 1.25rem;
+  background: var(--md-default-bg-color);
+  transition: background-color 120ms ease;
+}
+.site-card:hover {
+  background-color: var(--site-hover);
+}
+.site-card h3 {
+  margin: 0 0 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.site-card p {
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--md-default-fg-color--light);
+}
+.site-card a {
+  text-decoration: none;
+}
+.site-card a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

@@ -1,0 +1,160 @@
+# ==================================================================== #
+# Professional docs template — Material for MkDocs                     #
+#                                                                      #
+# Placeholders replaced by `python scripts/init_template.py`:          #
+#   mypackage · My Project · my-org · Your Name                        #
+# ==================================================================== #
+
+site_name: mypackage
+site_description: >-
+  A short, punchy description of mypackage — what it does, for whom, and
+  what makes it different. Two lines at most; it lands in search results.
+site_author: mypackage contributors
+site_url: https://my-org.github.io/mypackage/
+repo_name: my-org/mypackage
+repo_url: https://github.com/my-org/mypackage
+edit_uri: edit/main/docs/
+copyright: Copyright &copy; mypackage contributors — MIT License
+
+docs_dir: docs
+
+theme:
+  name: material
+  logo: logo.svg
+  favicon: logo.svg
+  icon:
+    repo: fontawesome/brands/github
+  font:
+    text: IBM Plex Mono
+    code: IBM Plex Mono
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: black
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.action.edit
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/my-org/mypackage
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/mypackage/
+  # Drop the "Made with Material for MkDocs" line. Set to `true` to keep it.
+  generator: false
+
+# Turn silent link rot into build failures under `mkdocs build --strict`.
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+  anchors: warn
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      title: On this page
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  # `base_path` lets docs pages pull in repo-root files (CHANGELOG, etc.)
+  # with the `--8<--` include syntax, so they never drift out of sync.
+  - pymdownx.snippets:
+      base_path: [., docs]
+      check_paths: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+plugins:
+  - search
+  # Renders the API reference straight from source docstrings, so it can
+  # never disagree with the code. Remove this block for a non-code project.
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: numpy
+            show_root_heading: true
+            show_root_full_path: false
+            show_source: true
+            show_signature_annotations: true
+            separate_signature: true
+            signature_crossrefs: true
+            merge_init_into_class: true
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            members_order: source
+            filters: ["!^_"]
+            docstring_section_style: table
+
+nav:
+  - Home: index.md
+  - Getting started:
+      - Installation: getting-started/installation.md
+      - Quickstart: getting-started/quickstart.md
+      - Core concepts: getting-started/concepts.md
+  - User guide:
+      - Basic usage: guide/basic-usage.md
+      - Advanced usage: guide/advanced.md
+      - Writing docs: guide/writing-docs.md
+  - API reference:
+      - Overview: reference/index.md
+      - Core: reference/core.md
+      - Utilities: reference/utils.md
+  - Project:
+      - API stability: reference/stability.md
+      - Contributing: about/contributing.md
+      - Changelog: about/changelog.md

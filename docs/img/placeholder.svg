@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" width="1200" height="620" role="img" aria-label="Placeholder screenshot">
+  <title>Placeholder screenshot</title>
+  <!-- Replace this file with a real screenshot (PNG) of your project.
+       Kept as SVG so the template builds with zero binary assets. -->
+  <rect width="1200" height="620" fill="#0a0a0a"/>
+  <g stroke="#ffffff" stroke-opacity="0.06">
+    <path d="M0 40h1200M0 80h1200M0 120h1200M0 160h1200M0 200h1200M0 240h1200M0 280h1200M0 320h1200M0 360h1200M0 400h1200M0 440h1200M0 480h1200M0 520h1200M0 560h1200"/>
+    <path d="M40 0v620M80 0v620M120 0v620M160 0v620M200 0v620M240 0v620M280 0v620M320 0v620M360 0v620M400 0v620M440 0v620M480 0v620M520 0v620M560 0v620M600 0v620M640 0v620M680 0v620M720 0v620M760 0v620M800 0v620M840 0v620M880 0v620M920 0v620M960 0v620M1000 0v620M1040 0v620M1080 0v620M1120 0v620M1160 0v620"/>
+  </g>
+  <rect x="40" y="40" width="1120" height="540" fill="none" stroke="#ffffff" stroke-opacity="0.18"/>
+  <g font-family="IBM Plex Mono, ui-monospace, monospace" fill="#ffffff">
+    <text x="72" y="96" font-size="20" fill-opacity="0.45" letter-spacing="2">FIGURE</text>
+    <text x="72" y="150" font-size="34" font-weight="700">Replace with a real screenshot</text>
+    <text x="72" y="192" font-size="18" fill-opacity="0.55">docs/img/placeholder.svg → docs/img/your-screenshot.png</text>
+  </g>
+  <g stroke="#4f46e5" stroke-width="3" fill="none">
+    <polyline points="72,500 200,455 328,470 456,390 584,405 712,330 840,300 968,245 1096,205"/>
+  </g>
+  <g stroke="#ffffff" stroke-opacity="0.35" stroke-width="2" fill="none">
+    <polyline points="72,520 200,505 328,510 456,478 584,486 712,452 840,441 968,414 1096,398"/>
+  </g>
+  <g font-family="IBM Plex Mono, ui-monospace, monospace" fill="#ffffff" fill-opacity="0.5" font-size="15">
+    <text x="72" y="556">t0</text>
+    <text x="1060" y="556">t1</text>
+  </g>
+</svg>

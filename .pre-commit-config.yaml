@@ -1,0 +1,21 @@
+# Run `uv run pre-commit install` once; hooks then run on every commit.
+# Keep these in sync with the CI jobs in .github/workflows/ci.yml.
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.0
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-yaml
+        # mkdocs.yml uses `!!python/name:` tags that a plain YAML parser rejects.
+        exclude: ^mkdocs\.yml$
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: mixed-line-ending

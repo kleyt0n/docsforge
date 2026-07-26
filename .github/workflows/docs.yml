@@ -1,0 +1,55 @@
+name: Docs
+
+# Builds the site and publishes it to GitHub Pages.
+#
+# One-time setup in the repository: Settings → Pages → Build and deployment →
+# Source: "GitHub Actions". No token or gh-pages branch needed.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "mkdocs.yml"
+      - "src/**" # the API reference is generated from docstrings
+      - "CHANGELOG.md" # included into docs/about/changelog.md
+      - ".github/workflows/docs.yml"
+  workflow_dispatch: # allow manual runs
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - name: Set up Python
+        run: uv python install 3.12
+      - name: Install docs deps
+        run: uv sync --extra docs
+      - name: Build site
+        run: uv run mkdocs build --strict
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write # deploy to GitHub Pages
+      id-token: write # OIDC token used by deploy-pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

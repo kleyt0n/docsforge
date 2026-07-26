@@ -1,0 +1,33 @@
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# MkDocs output
+site/
+
+# Lockfile — a decision, not a default: commit it for applications and for
+# reproducible CI; uncomment to ignore it if you publish a library and would
+# rather resolve fresh on every run.
+# uv.lock
+
+# Python
+__pycache__/
+*.py[cod]
+.Python
+.venv/
+venv/
+
+# Testing / tooling caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Editors & OS
+.idea/
+.vscode/
+.DS_Store

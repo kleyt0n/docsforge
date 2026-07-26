@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question / usage help
+    url: https://github.com/my-org/mypackage/discussions
+    about: Ask "how do I…" questions and share ideas in Discussions.
+  - name: Documentation
+    url: https://my-org.github.io/mypackage/
+    about: Guides, tutorials, and the full API reference.
+  - name: Security vulnerability
+    url: https://github.com/my-org/mypackage/security/advisories/new
+    about: Report security issues privately — please do not open a public issue.

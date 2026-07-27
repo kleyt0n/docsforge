@@ -50,10 +50,10 @@ docs = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/my-org/docsforge"
-Documentation = "https://my-org.github.io/docsforge/"
-Repository = "https://github.com/my-org/docsforge"
-Issues = "https://github.com/my-org/docsforge/issues"
+Homepage = "https://github.com/kleyt0n/docsforge"
+Documentation = "https://kleyt0n.github.io/docsforge/"
+Repository = "https://github.com/kleyt0n/docsforge"
+Issues = "https://github.com/kleyt0n/docsforge/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/docsforge"]

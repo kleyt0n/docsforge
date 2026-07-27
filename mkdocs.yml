@@ -2,7 +2,7 @@
 # Docsforge — Material for MkDocs                                      #
 #                                                                      #
 # Placeholders replaced by `python scripts/init_template.py`:          #
-#   docsforge · Docsforge · my-org · Docsforge contributors            #
+#   docsforge · Docsforge · kleyt0n · Docsforge contributors            #
 # ==================================================================== #
 
 site_name: Docsforge
@@ -10,9 +10,9 @@ site_description: >-
   A short, punchy description of docsforge — what it does, for whom, and
   what makes it different. Two lines at most; it lands in search results.
 site_author: Docsforge contributors
-site_url: https://my-org.github.io/docsforge/
-repo_name: my-org/docsforge
-repo_url: https://github.com/my-org/docsforge
+site_url: https://kleyt0n.github.io/docsforge/
+repo_name: kleyt0n/docsforge
+repo_url: https://github.com/kleyt0n/docsforge
 edit_uri: edit/main/docs/
 copyright: Copyright &copy; Docsforge contributors — MIT License
 
@@ -69,7 +69,7 @@ extra_javascript:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/my-org/docsforge
+      link: https://github.com/kleyt0n/docsforge
     - icon: fontawesome/brands/python
       link: https://pypi.org/project/docsforge/
   # Drop the "Made with Material for MkDocs" line. Set to `true` to keep it.

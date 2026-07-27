@@ -44,7 +44,7 @@ docs = [
     # `[imaging]` pulls in Pillow and CairoSVG for the social-cards plugin. The
     # plugin only generates cards when CI=true (see mkdocs.yml), but the Python
     # packages install everywhere, so the CI build needs no special extra.
-    "mkdocs-material[imaging]>=9.5",
+    "mkdocs-material[imaging]>=9.7.7",
     "mkdocstrings[python]>=0.25",
     "pymdown-extensions>=10.0",
 ]

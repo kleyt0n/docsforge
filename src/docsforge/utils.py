@@ -12,7 +12,7 @@ from collections.abc import Iterable, Sequence
 from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:  # pragma: no cover - import cycle only exists for type checkers
-    from mypackage.core import Report
+    from docsforge.core import Report
 
 __all__ = ["describe", "normalize", "trim"]
 
@@ -104,7 +104,7 @@ def describe(reports: Iterable[Report]) -> list[dict[str, Any]]:
     Parameters
     ----------
     reports : iterable of Report
-        Typically the output of :func:`mypackage.core.compare`.
+        Typically the output of :func:`docsforge.core.compare`.
 
     Returns
     -------
@@ -114,7 +114,7 @@ def describe(reports: Iterable[Report]) -> list[dict[str, Any]]:
 
     Examples
     --------
-    >>> from mypackage import compare
+    >>> from docsforge import compare
     >>> describe(compare({"a": [1.0, 2.0, 3.0]}))
     [{'label': 'a', 'mean': 2.0, 'spread': 2.0, 'n': 3}]
     """

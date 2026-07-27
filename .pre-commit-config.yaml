@@ -8,6 +8,18 @@ repos:
         args: [--fix]
       - id: ruff-format
 
+  # Mirrors the `typecheck` job in ci.yml. Runs against the repo's own
+  # environment rather than an isolated one, so it sees the same dependencies
+  # mypy sees in CI.
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy
+        entry: uv run mypy
+        language: system
+        pass_filenames: false
+        files: ^(src|tests|examples|conftest\.py)
+
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
@@ -19,3 +31,14 @@ repos:
       - id: check-toml
       - id: check-merge-conflict
       - id: mixed-line-ending
+
+  # Mirrors the `rust` job in ci.yml. Delete alongside `rust/` if your project
+  # has no Rust crate.
+  - repo: local
+    hooks:
+      - id: cargo-fmt
+        name: cargo fmt
+        entry: cargo fmt --manifest-path rust/Cargo.toml --all
+        language: system
+        pass_filenames: false
+        files: ^rust/

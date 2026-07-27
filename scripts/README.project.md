@@ -1,25 +1,24 @@
 <div align="center">
 
-<img src="docs/logo.svg" alt="mypackage logo" width="120">
+<img src="docs/logo.svg" alt="Docsforge logo" width="120">
 
-# mypackage
+# Docsforge
 
-**A short, punchy description of mypackage — what it does and for whom.**
+**A short, punchy description of docsforge — what it does and for whom.**
 
-[![python](https://img.shields.io/badge/python-3.11+-3987e5?style=flat-square)](https://www.python.org)
-[![docs](https://img.shields.io/badge/docs-latest-4f46e5?style=flat-square)](https://my-org.github.io/mypackage/)
-[![license](https://img.shields.io/badge/MIT-c98500?style=flat-square)](LICENSE)
+[![python](https://img.shields.io/badge/python-3.11+-495057?style=flat-square&labelColor=212529)](https://www.python.org)
+[![docs](https://img.shields.io/badge/docs-latest-495057?style=flat-square&labelColor=212529)](https://my-org.github.io/docsforge/)
+[![license](https://img.shields.io/badge/MIT-495057?style=flat-square&labelColor=212529)](LICENSE)
 
-[Documentation](https://my-org.github.io/mypackage/) ·
-[Quickstart](https://my-org.github.io/mypackage/getting-started/quickstart/) ·
-[API reference](https://my-org.github.io/mypackage/reference/) ·
-[Changelog](CHANGELOG.md)
+[Documentation](https://my-org.github.io/docsforge/) ·
+[Quickstart](https://my-org.github.io/docsforge/getting-started/quickstart/) ·
+[API reference](https://my-org.github.io/docsforge/reference/)
 
 </div>
 
 ---
 
-## Why mypackage
+## Why Docsforge
 
 Two or three sentences on the problem this solves, aimed at someone who has
 never heard of it. Say what it *is*, then back the claim with the one detail
@@ -28,13 +27,13 @@ that makes it credible.
 ## Install
 
 ```bash
-uv add mypackage      # or: pip install mypackage
+uv add docsforge      # or: pip install docsforge
 ```
 
 ## Quickstart
 
 ```python
-import mypackage as mp
+import docsforge as mp
 
 report = mp.summarize([3.0, 1.0, 4.0, 1.0, 5.0], label="demo")
 
@@ -42,7 +41,7 @@ print(report.mean)  # 2.8
 print(report.to_row())
 ```
 
-See the [documentation](https://my-org.github.io/mypackage/) for the full guide.
+See the [documentation](https://my-org.github.io/docsforge/) for the full guide.
 
 ## Features
 
@@ -54,25 +53,25 @@ See the [documentation](https://my-org.github.io/mypackage/) for the full guide.
 
 | | |
 |---|---|
-| [Installation](https://my-org.github.io/mypackage/getting-started/installation/) | Install, extras, and verification |
-| [Quickstart](https://my-org.github.io/mypackage/getting-started/quickstart/) | End to end in under thirty lines |
-| [Core concepts](https://my-org.github.io/mypackage/getting-started/concepts/) | The ideas that make the API predictable |
-| [API reference](https://my-org.github.io/mypackage/reference/) | Generated from source docstrings |
+| [Installation](https://my-org.github.io/docsforge/getting-started/installation/) | Install, extras, and verification |
+| [Quickstart](https://my-org.github.io/docsforge/getting-started/quickstart/) | End to end in under thirty lines |
+| [Core concepts](https://my-org.github.io/docsforge/getting-started/concepts/) | The ideas that make the API predictable |
+| [API reference](https://my-org.github.io/docsforge/reference/) | Generated from source docstrings |
 
 ## Development
 
 ```bash
-git clone https://github.com/my-org/mypackage
-cd mypackage
+git clone https://github.com/my-org/docsforge
+cd docsforge
 uv sync --all-extras
 uv run pytest
+cargo test --manifest-path rust/Cargo.toml   # if you kept the Rust crate
 uv run mkdocs serve
 ```
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the full workflow, and
-[docs/guide/writing-docs.md](docs/guide/writing-docs.md) for the documentation
-style guide.
+See [docs/guide/writing-docs.md](docs/guide/writing-docs.md) for the
+documentation style guide.
 
 ## License
 
-[MIT](LICENSE) © mypackage contributors
+[MIT](LICENSE) © Docsforge contributors

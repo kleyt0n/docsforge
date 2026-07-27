@@ -9,7 +9,7 @@ written — copy the whole thing into a file and execute it.
 ## 1. Summarize a series
 
 ```python
-import mypackage as mp
+import docsforge as mp
 
 report = mp.summarize([3.0, 1.0, 4.0, 1.0, 5.0], label="demo")  # (1)!
 
@@ -20,7 +20,7 @@ print(report.spread)  # 4.0
 1.  `label` is optional, but naming a result pays off the moment you have more
     than one of them — it shows up in `to_row()` and in every comparison table.
 
-Every entry point returns a [`Report`][mypackage.core.Report], a small frozen
+Every entry point returns a [`Report`][docsforge.core.Report], a small frozen
 object. Because the return type is uniform, anything that consumes one result
 consumes all of them.
 

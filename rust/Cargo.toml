@@ -1,0 +1,29 @@
+[package]
+name = "docsforge"
+version = "0.1.0"
+edition = "2021"
+# The oldest toolchain CI is willing to vouch for. Raising it is a breaking
+# change for downstream crates, so treat it like any other public API.
+rust-version = "1.74"
+description = "A short, punchy description of docsforge — what it does and for whom."
+license = "MIT"
+authors = ["Docsforge contributors"]
+keywords = ["documentation", "template"]
+repository = "https://github.com/my-org/docsforge"
+documentation = "https://my-org.github.io/docsforge/reference/rust/"
+readme = "../README.md"
+
+# Runtime dependencies use lower bounds only: no speculative upper caps, so the
+# crate composes cleanly in larger dependency graphs.
+[dependencies]
+
+# Declared here rather than passed on the CI command line, so a bare
+# `cargo clippy` locally fails on exactly what CI fails on.
+[lints.rust]
+missing_docs = "warn"
+
+[lints.clippy]
+all = { level = "warn", priority = -1 }
+doc_markdown = "warn"
+missing_errors_doc = "warn"
+missing_panics_doc = "warn"

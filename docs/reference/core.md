@@ -1,9 +1,9 @@
 # Core
 
 The primary entry points. Every one of them returns a
-[`Report`][mypackage.core.Report] — see
+[`Report`][docsforge.core.Report] — see
 [Core concepts](../getting-started/concepts.md) for why that matters.
 
-::: mypackage.core
+::: docsforge.core
     options:
       heading_level: 2

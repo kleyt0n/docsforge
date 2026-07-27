@@ -44,7 +44,7 @@ a helper. Two consequences worth knowing:
   part of the public API — see [API stability](../reference/stability.md).
 
 !!! warning "Public surface"
-    The public API is what `mypackage.__all__` exports plus the documented
+    The public API is what `docsforge.__all__` exports plus the documented
     submodules. Anything underscore-prefixed can change in any release.
 
 ## Extension is registration, not inheritance

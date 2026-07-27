@@ -7,15 +7,16 @@ Run once, right after cloning:
     python scripts/init_template.py              # apply
 
 It rewrites the placeholder strings below across the whole tree, renames
-``src/mypackage/`` to your package name, and swaps this README for a starter
+``src/docsforge/`` to your package name, and swaps this README for a starter
 one. Anything it cannot infer, it asks for.
 
 Placeholders
 ------------
-``mypackage``               package / import name, and the default display name
+``docsforge``               package / import / crate name
+``Docsforge``               display name — site title, headings, alt text
 ``my-org``                  GitHub org or user
-``my-org/mypackage``        repository path
-``mypackage contributors``  copyright holder
+``my-org/docsforge``        repository path
+``Docsforge contributors``  copyright holder
 
 The script only edits text files, and never touches ``.git/``.
 """
@@ -39,6 +40,7 @@ SKIP_DIRS = {
     "site",
     "dist",
     "build",
+    "target",  # Rust build artifacts
     "__pycache__",
     ".pytest_cache",
     ".ruff_cache",
@@ -56,6 +58,7 @@ TEXT_SUFFIXES = {
     ".lock",
     ".md",
     ".py",
+    ".rs",
     ".svg",
     ".toml",
     ".txt",
@@ -83,11 +86,15 @@ def collect(args: argparse.Namespace) -> dict[str, str]:
             return default
         return ask(prompt, default)
 
-    package = resolve(args.package, "Package (import) name", "mypackage")
+    package = resolve(args.package, "Package (import) name", "docsforge")
     if not PACKAGE_RE.match(package):
         sys.exit(f"error: {package!r} is not a valid Python package name")
 
-    display = resolve(args.name, "Display name (site title)", package)
+    display = resolve(
+        args.name,
+        "Display name (site title)",
+        package.replace("_", " ").title(),
+    )
     org = resolve(args.org, "GitHub org or user", "my-org")
     repo = resolve(args.repo, "Repository name", package)
     author = resolve(args.author, "Copyright holder", f"{display} contributors")
@@ -108,13 +115,21 @@ def collect(args: argparse.Namespace) -> dict[str, str]:
 
 
 def replacements(cfg: dict[str, str]) -> list[tuple[str, str]]:
-    """Ordered (old, new) pairs. Longest/most specific patterns come first."""
+    """Ordered (old, new) pairs. Longest/most specific patterns come first.
+
+    Order matters: ``Docsforge contributors`` has to win over the bare
+    ``Docsforge`` display-name pair, and both of the ``my-org/...`` URL forms
+    have to win over the bare ``my-org``. :func:`rewrite` applies the whole
+    table in one pass, so the first pattern that matches at a position wins and
+    substituted text is never re-examined.
+    """
     return [
-        ("my-org.github.io/mypackage", f"{cfg['org']}.github.io/{cfg['repo']}"),
-        ("my-org/mypackage", f"{cfg['org']}/{cfg['repo']}"),
-        ("mypackage contributors", cfg["author"]),
+        ("my-org.github.io/docsforge", f"{cfg['org']}.github.io/{cfg['repo']}"),
+        ("my-org/docsforge", f"{cfg['org']}/{cfg['repo']}"),
+        ("Docsforge contributors", cfg["author"]),
+        ("Docsforge", cfg["display"]),
         ("my-org", cfg["org"]),
-        ("mypackage", cfg["package"]),
+        ("docsforge", cfg["package"]),
     ]
 
 
@@ -135,20 +150,31 @@ def iter_files(root: Path):
             yield path
 
 
-def rewrite(path: Path, pairs: list[tuple[str, str]], *, dry_run: bool) -> int:
-    """Apply ``pairs`` to one file. Returns the number of substitutions."""
+def compile_pairs(pairs: list[tuple[str, str]]) -> tuple[re.Pattern[str], dict[str, str]]:
+    """Compile ``pairs`` into one alternation pattern plus its lookup table.
+
+    A single pass is what makes the substitution safe: applying the pairs one
+    after another would let a later pattern match text an earlier one just
+    inserted, so a display name of ``Docsforge Pro`` or an org named after the
+    package would be rewritten twice.
+    """
+    table = {old: new for old, new in pairs if old != new}
+    pattern = re.compile("|".join(re.escape(old) for old in table))
+    return pattern, table
+
+
+def rewrite(path: Path, compiled: tuple[re.Pattern[str], dict[str, str]], *, dry_run: bool) -> int:
+    """Apply the compiled replacements to one file. Returns the match count."""
+    pattern, table = compiled
+    if not table:
+        return 0
+
     try:
         original = path.read_text(encoding="utf-8")
     except UnicodeDecodeError:
         return 0
 
-    updated = original
-    count = 0
-    for old, new in pairs:
-        if old == new:
-            continue
-        count += updated.count(old)
-        updated = updated.replace(old, new)
+    updated, count = pattern.subn(lambda match: table[match.group(0)], original)
 
     if count and not dry_run:
         path.write_text(updated, encoding="utf-8")
@@ -166,31 +192,6 @@ def _apply_edits(edits: dict[Path, list[tuple[str, str]]], *, dry_run: bool) -> 
             text = text.replace(old, new)
         if not dry_run:
             path.write_text(text, encoding="utf-8")
-
-
-def apply_display_name(cfg: dict[str, str], *, dry_run: bool) -> None:
-    """Fix the few places that want the display name, not the package name."""
-    pkg, display = cfg["package"], cfg["display"]
-    if display == pkg:
-        return
-
-    edits = {
-        ROOT / "mkdocs.yml": [(f"site_name: {pkg}", f"site_name: {display}")],
-        ROOT / "docs" / "index.md": [
-            (
-                f'<h1 class="site-hero__title">{pkg}</h1>',
-                f'<h1 class="site-hero__title">{display}</h1>',
-            ),
-            (f"## Why {pkg}", f"## Why {display}"),
-        ],
-        ROOT / "README.md": [
-            (f"# {pkg}\n", f"# {display}\n"),
-            (f"## Why {pkg}", f"## Why {display}"),
-            (f'alt="{pkg} logo"', f'alt="{display} logo"'),
-        ],
-    }
-
-    _apply_edits(edits, dry_run=dry_run)
 
 
 def apply_tagline(cfg: dict[str, str], *, dry_run: bool) -> None:
@@ -224,18 +225,23 @@ def apply_tagline(cfg: dict[str, str], *, dry_run: bool) -> None:
 
 
 def rename_package(cfg: dict[str, str], *, dry_run: bool) -> None:
-    """Rename ``src/mypackage`` to the chosen package name."""
-    src = ROOT / "src" / "mypackage"
+    """Rename ``src/docsforge`` to the chosen package name."""
+    src = ROOT / "src" / "docsforge"
     dst = ROOT / "src" / cfg["package"]
     if src == dst or not src.exists():
         return
-    print(f"  rename  src/mypackage -> src/{cfg['package']}")
+    print(f"  rename  src/docsforge -> src/{cfg['package']}")
     if not dry_run:
         src.rename(dst)
 
 
 def install_project_readme(*, dry_run: bool) -> None:
-    """Replace the template README with the starter project README."""
+    """Replace the template README with the starter project README.
+
+    The banner goes with it: it illustrates the template's own README, which
+    this overwrites, so keeping it would leave half a megabyte of unreferenced
+    PNG in every project started from here.
+    """
     starter = ROOT / "scripts" / "README.project.md"
     if not starter.exists():
         return
@@ -243,6 +249,12 @@ def install_project_readme(*, dry_run: bool) -> None:
     if not dry_run:
         shutil.copyfile(starter, ROOT / "README.md")
         starter.unlink()
+
+    banner = ROOT / "banner.png"
+    if banner.exists():
+        print("  remove  banner.png")
+        if not dry_run:
+            banner.unlink()
 
 
 def stamp_license(cfg: dict[str, str], *, dry_run: bool) -> None:
@@ -262,7 +274,7 @@ def main() -> int:
         description="Rename this docs template into your own project.",
     )
     parser.add_argument("--name", help="display name shown as the site title")
-    parser.add_argument("--package", help="Python package / import name")
+    parser.add_argument("--package", help="package / import / crate name")
     parser.add_argument("--org", help="GitHub org or user")
     parser.add_argument("--repo", help="repository name")
     parser.add_argument("--author", help="copyright holder")
@@ -280,7 +292,7 @@ def main() -> int:
     args = parser.parse_args()
 
     cfg = collect(args)
-    pairs = replacements(cfg)
+    compiled = compile_pairs(replacements(cfg))
 
     print()
     print(f"  package  {cfg['package']}")
@@ -291,15 +303,14 @@ def main() -> int:
 
     total_files = 0
     for path in iter_files(ROOT):
-        changed = rewrite(path, pairs, dry_run=args.dry_run)
+        changed = rewrite(path, compiled, dry_run=args.dry_run)
         if changed:
             total_files += 1
             print(f"  {changed:>4}  {path.relative_to(ROOT)}")
 
-    # Install the starter README first, so the display name and tagline edits
-    # below land on the project's README rather than the template's.
+    # Install the starter README first, so the tagline edit below lands on the
+    # project's README rather than the template's.
     install_project_readme(dry_run=args.dry_run)
-    apply_display_name(cfg, dry_run=args.dry_run)
     apply_tagline(cfg, dry_run=args.dry_run)
     stamp_license(cfg, dry_run=args.dry_run)
     rename_package(cfg, dry_run=args.dry_run)

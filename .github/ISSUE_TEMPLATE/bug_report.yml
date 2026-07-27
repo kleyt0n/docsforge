@@ -1,13 +1,14 @@
 name: Bug report
-description: Report a problem with mypackage
+description: Report a problem with docsforge
 labels: ["bug"]
 body:
   - type: markdown
     attributes:
       value: |
         Thanks for taking the time to file a bug! Please search existing issues
-        first. For security vulnerabilities, do **not** use this form — follow
-        [SECURITY.md](https://github.com/my-org/mypackage/blob/main/SECURITY.md).
+        first. For security vulnerabilities, do **not** use this form — report
+        them privately via
+        [Security advisories](https://github.com/my-org/docsforge/security/advisories/new).
   - type: textarea
     id: what-happened
     attributes:
@@ -32,8 +33,8 @@ body:
   - type: input
     id: version
     attributes:
-      label: mypackage version
-      description: Output of `python -c "import mypackage; print(mypackage.__version__)"`
+      label: docsforge version
+      description: Output of `python -c "import docsforge; print(docsforge.__version__)"`
     validations:
       required: true
   - type: textarea

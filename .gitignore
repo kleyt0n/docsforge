@@ -3,13 +3,18 @@ dist/
 build/
 *.egg-info/
 
-# MkDocs output
+# MkDocs output, and the social-cards plugin's render cache
 site/
+.cache/
 
-# Lockfile — a decision, not a default: commit it for applications and for
-# reproducible CI; uncomment to ignore it if you publish a library and would
+# Lockfiles — a decision, not a default: commit them for applications and for
+# reproducible CI; uncomment to ignore them if you publish a library and would
 # rather resolve fresh on every run.
 # uv.lock
+# rust/Cargo.lock
+
+# Rust
+rust/target/
 
 # Python
 __pycache__/

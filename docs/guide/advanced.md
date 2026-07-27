@@ -10,7 +10,7 @@ citizen everywhere a method name is accepted:
 
 ```python
 import statistics
-import mypackage as mp
+import docsforge as mp
 
 
 @mp.register("median")  # (1)!
@@ -46,12 +46,12 @@ to get subtly wrong:
 
 | Helper | Use it for |
 |---|---|
-| `mypackage.utils.normalize` | Coercing arbitrary sequences to a validated array |
-| `mypackage.utils.trim` | Symmetric tail trimming with the standard convention |
-| `mypackage.utils.describe` | Turning a mapping of results into printable rows |
+| `docsforge.utils.normalize` | Coercing any iterable of numbers to a validated tuple of floats |
+| `docsforge.utils.trim` | Symmetric tail trimming with the standard convention |
+| `docsforge.utils.describe` | Turning an iterable of `Report` into printable rows |
 
 ```python
-from mypackage.utils import normalize, trim
+from docsforge.utils import normalize, trim
 
 clean = trim(normalize(raw_values), fraction=0.1)
 ```

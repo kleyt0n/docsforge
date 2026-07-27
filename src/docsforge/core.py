@@ -11,8 +11,8 @@ from collections.abc import Callable, Iterable, Mapping
 from dataclasses import dataclass, field
 from typing import Any
 
-from mypackage.utils import normalize
-from mypackage.utils import trim as trim_tails
+from docsforge.utils import normalize
+from docsforge.utils import trim as trim_tails
 
 __all__ = ["Report", "compare", "register", "summarize"]
 

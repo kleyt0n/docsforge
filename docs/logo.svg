@@ -1,13 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" role="img" aria-label="mypackage logo">
-  <title>mypackage</title>
-  <!-- Placeholder mark: nested line-art contours. Swap this file for your own
-       logo (keep it a single-color SVG so it reads on the dark header). -->
-  <path d="M 512 72 L 952 512 L 512 952 L 72 512 Z" fill="none" stroke="#ffffff" stroke-width="2.60" stroke-linejoin="round" stroke-linecap="round"/>
-  <path d="M 512 127 L 897 512 L 512 897 L 127 512 Z" fill="none" stroke="#ffffff" stroke-width="2.46" stroke-linejoin="round" stroke-linecap="round"/>
-  <path d="M 512 177 L 847 512 L 512 847 L 177 512 Z" fill="none" stroke="#ffffff" stroke-width="2.33" stroke-linejoin="round" stroke-linecap="round"/>
-  <path d="M 512 224 L 800 512 L 512 800 L 224 512 Z" fill="none" stroke="#ffffff" stroke-width="2.19" stroke-linejoin="round" stroke-linecap="round"/>
-  <path d="M 512 267 L 757 512 L 512 757 L 267 512 Z" fill="none" stroke="#ffffff" stroke-width="2.05" stroke-linejoin="round" stroke-linecap="round"/>
-  <path d="M 512 307 L 717 512 L 512 717 L 307 512 Z" fill="none" stroke="#ffffff" stroke-width="1.91" stroke-linejoin="round" stroke-linecap="round"/>
-  <path d="M 512 344 L 680 512 L 512 680 L 344 512 Z" fill="none" stroke="#ffffff" stroke-width="1.77" stroke-linejoin="round" stroke-linecap="round"/>
-  <path d="M 512 378 L 646 512 L 512 646 L 378 512 Z" fill="none" stroke="#ffffff" stroke-width="1.64" stroke-linejoin="round" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" role="img" aria-label="Docsforge logo">
+  <title>Docsforge</title>
+  <!-- Docsforge mark: an anvil whose top slab is a dog-eared page — forge on
+       the left (horn), docs on the right (folded corner). One solid
+       silhouette in Bright Snow (#f8f9fa) so it reads on the Carbon Black
+       header in both schemes; no strokes, so nothing thins out at the 72px
+       the hero renders it at. Swap this file for your own logo (keep it a
+       single-color SVG). -->
+  <path fill="#f8f9fa" d="M352 256 H768 L864 352 V416 H352 L160 336 Z M432 416 H592 V640 H432 Z M288 640 H736 V768 H288 Z"/>
 </svg>

@@ -3,13 +3,16 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "mypackage"
-version = "0.1.0"
-description = "A short, punchy description of mypackage — what it does and for whom."
+name = "docsforge"
+# Read from `__version__` in src/docsforge/__init__.py by [tool.hatch.version]
+# below — one place to bump, and `docsforge.__version__` can never disagree
+# with the version on PyPI.
+dynamic = ["version"]
+description = "A short, punchy description of docsforge — what it does and for whom."
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
-authors = [{ name = "mypackage contributors" }]
+authors = [{ name = "Docsforge contributors" }]
 keywords = ["documentation", "template", "mkdocs"]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -28,6 +31,7 @@ dev = [
     "pytest>=8.0",
     "pytest-cov>=5.0",
     "ruff>=0.15",
+    "mypy>=1.11",
     "pre-commit>=3.7",
 ]
 # Everything the documentation site needs. `uv sync --extra docs` is enough to
@@ -37,19 +41,25 @@ docs = [
     # theming layer this setup is built on, with no migration path. Lift the
     # cap only once Material for MkDocs supports it.
     "mkdocs>=1.6,<2",
-    "mkdocs-material>=9.5",
+    # `[imaging]` pulls in Pillow and CairoSVG for the social-cards plugin. The
+    # plugin only generates cards when CI=true (see mkdocs.yml), but the Python
+    # packages install everywhere, so the CI build needs no special extra.
+    "mkdocs-material[imaging]>=9.5",
     "mkdocstrings[python]>=0.25",
     "pymdown-extensions>=10.0",
 ]
 
 [project.urls]
-Homepage = "https://github.com/my-org/mypackage"
-Documentation = "https://my-org.github.io/mypackage/"
-Repository = "https://github.com/my-org/mypackage"
-Issues = "https://github.com/my-org/mypackage/issues"
+Homepage = "https://github.com/my-org/docsforge"
+Documentation = "https://my-org.github.io/docsforge/"
+Repository = "https://github.com/my-org/docsforge"
+Issues = "https://github.com/my-org/docsforge/issues"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/mypackage"]
+packages = ["src/docsforge"]
+
+[tool.hatch.version]
+path = "src/docsforge/__init__.py"
 
 [tool.pytest.ini_options]
 # Doctests in `src/` run as part of the suite, so every example in the API
@@ -61,6 +71,16 @@ addopts = "--doctest-modules"
 # Ratchet upward over time; never lower it to make a pull request pass.
 fail_under = 90
 show_missing = true
+
+[tool.mypy]
+python_version = "3.11"
+# Tests and examples are checked too, not just `src`. They are the code most
+# likely to drift from the API, and a `-> None` on a test costs nothing.
+files = ["src", "tests", "examples", "conftest.py"]
+# Strict from the first commit. Turning strictness on later means retrofitting
+# annotations onto code written without them, which nobody ever gets around to.
+strict = true
+pretty = true
 
 [tool.ruff]
 line-length = 100

@@ -70,26 +70,26 @@ picks "uv" once sees "uv" everywhere.
 === "uv"
 
     ```bash
-    uv add mypackage
+    uv add docsforge
     ```
 
 === "pip"
 
     ```bash
-    pip install mypackage
+    pip install docsforge
     ```
 
 ````markdown
 === "uv"
 
     ```bash
-    uv add mypackage
+    uv add docsforge
     ```
 
 === "pip"
 
     ```bash
-    pip install mypackage
+    pip install docsforge
     ```
 ````
 
@@ -119,7 +119,7 @@ report = mp.summarize(values, trim=0.1)   # (1)!
 ### Highlighting and titles
 
 ```python title="examples/basic_usage.py" hl_lines="3 4"
-import mypackage as mp
+import docsforge as mp
 
 values = [3.0, 1.0, 4.0, 1.0, 5.0]
 report = mp.summarize(values, label="demo")
@@ -210,14 +210,14 @@ it and your links render as literal text.
 |---|---|
 | Another page | `[Quickstart](../getting-started/quickstart.md)` |
 | A section | `[Sharp edges](advanced.md#sharp-edges)` |
-| A Python object | ``[`Report`][mypackage.core.Report]`` |
+| A Python object | ``[`Report`][docsforge.core.Report]`` |
 
 Link to **`.md` files, not URLs** — MkDocs rewrites them and, under `--strict`,
 fails the build when the target moves. The `validation:` block in `mkdocs.yml`
 extends the same treatment to anchors and absolute links.
 
-Cross-references like [`Report`][mypackage.core.Report] and
-[`summarize()`][mypackage.core.summarize] are resolved by mkdocstrings, so they
+Cross-references like [`Report`][docsforge.core.Report] and
+[`summarize()`][docsforge.core.summarize] are resolved by mkdocstrings, so they
 follow the code when it is renamed.
 
 ## Smaller ingredients

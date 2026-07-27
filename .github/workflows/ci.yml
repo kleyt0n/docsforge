@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [main]
 
+# Nothing here writes to the repository. Declaring that once, at the top, means
+# a job added later has to ask for more rather than inherit it.
+permissions:
+  contents: read
+
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
@@ -28,6 +33,23 @@ jobs:
       - name: Ruff format check
         run: uv run ruff format --check .
 
+  # Separate from `lint` so a type error and a style error are two red checks,
+  # not one — you can see at a glance which kind of problem you have.
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - name: Set up Python
+        run: uv python install 3.12
+      - name: Install dev deps
+        run: uv sync --extra dev
+      - name: mypy
+        run: uv run mypy
+
   test:
     name: test (${{ matrix.os }}, py${{ matrix.python-version }})
     runs-on: ${{ matrix.os }}
@@ -48,7 +70,24 @@ jobs:
         run: uv sync --extra dev
       # The coverage floor is enforced from [tool.coverage.report] fail_under.
       - name: Run tests
-        run: uv run pytest --cov=mypackage --cov-report=term-missing
+        run: uv run pytest --cov=docsforge --cov-report=term-missing
+
+  # The crate in `rust/`: same discipline as the Python side — format, lints
+  # as errors, and the test suite (unit tests and doctests together).
+  rust:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - name: rustfmt
+        run: cargo fmt --manifest-path rust/Cargo.toml --all --check
+      - name: Clippy
+        run: cargo clippy --manifest-path rust/Cargo.toml --all-targets -- -D warnings
+      - name: Run tests
+        run: cargo test --manifest-path rust/Cargo.toml
 
   # The same strict build that publishes the site, run on every pull request so
   # broken links and missing nav entries fail review, not production.
@@ -62,7 +101,18 @@ jobs:
           enable-cache: true
       - name: Set up Python
         run: uv python install 3.12
+      # Cairo and friends, for the social-cards plugin. Cheap, and it means the
+      # PR build exercises the same code path as the deploy in docs.yml.
+      - name: Install imaging libraries
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            libcairo2-dev libfreetype6-dev libffi-dev libjpeg-dev libpng-dev libz-dev
       - name: Install docs deps
         run: uv sync --extra docs
+      # The strict build runs the rustdoc hook from mkdocs.yml, so cargo must
+      # be present even though the built site is discarded here.
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
       - name: Build docs (strict)
         run: uv run mkdocs build --strict

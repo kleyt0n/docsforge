@@ -1,0 +1,72 @@
+name: Release
+
+# Publishes to PyPI when a `v*` tag is pushed.
+#
+# One-time setup, before the first tag:
+#   1. https://pypi.org/manage/account/publishing/ → add a pending publisher
+#      for this project, with owner `my-org`, repository `docsforge`,
+#      workflow `release.yml`, and environment `pypi`.
+#   2. Settings → Environments → New environment → `pypi`. Add required
+#      reviewers if you want a human between the tag and the upload.
+#
+# No API token is stored anywhere: the upload is authenticated with a
+# short-lived OIDC token minted for this workflow run.
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - name: Set up Python
+        run: uv python install 3.12
+
+      # The tag is the source of truth for what gets published, and the version
+      # lives in src/docsforge/__init__.py. If they disagree, stop here rather
+      # than shipping a wheel whose number nobody can trace back to a commit.
+      - name: Check the tag matches the package version
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          version="$(uv run python -c 'import docsforge; print(docsforge.__version__)')"
+          if [ "$tag" != "$version" ]; then
+            echo "::error::tag $GITHUB_REF_NAME does not match __version__ $version"
+            exit 1
+          fi
+
+      - name: Build sdist and wheel
+        run: uv build
+
+      - name: Verify the artifacts
+        run: uvx twine check dist/*
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/docsforge/
+    permissions:
+      id-token: write # mints the OIDC token PyPI trusts
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1

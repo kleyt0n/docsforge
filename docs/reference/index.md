@@ -2,7 +2,7 @@
 
 This reference is generated directly from the source docstrings, so it always
 matches the installed version. It is organized by module; the top-level
-`mypackage` namespace re-exports the most common entry points.
+`docsforge` namespace re-exports the most common entry points.
 
 <div class="site-grid" markdown>
 
@@ -16,17 +16,22 @@ The primary entry points and the `Report` type they all return.
 Building blocks for composing your own methods.
 </div>
 
+<div class="site-card" markdown>
+### [Rust API](rust.md)
+rustdoc-generated reference for the companion crate in `rust/`.
+</div>
+
 </div>
 
 ## Top-level namespace
 
-The following are importable directly as `mypackage.<name>`:
+The following are importable directly as `docsforge.<name>`:
 
 ```python
-import mypackage as mp
+import docsforge as mp
 ```
 
-::: mypackage
+::: docsforge
     options:
       members: false
       show_root_heading: false
@@ -34,10 +39,10 @@ import mypackage as mp
 
 | Name | Kind | Summary |
 |---|---|---|
-| [`summarize`][mypackage.core.summarize] | function | Summarize one series into a `Report` |
-| [`compare`][mypackage.core.compare] | function | Summarize several series on equal footing |
-| [`register`][mypackage.core.register] | decorator | Add a method to the registry |
-| [`Report`][mypackage.core.Report] | class | The uniform result type |
+| [`summarize`][docsforge.core.summarize] | function | Summarize one series into a `Report` |
+| [`compare`][docsforge.core.compare] | function | Summarize several series on equal footing |
+| [`register`][docsforge.core.register] | decorator | Add a method to the registry |
+| [`Report`][docsforge.core.Report] | class | The uniform result type |
 
 !!! note "How to read these pages"
     Signatures show the annotations from the source. Parameters, returns, and

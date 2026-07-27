@@ -6,7 +6,7 @@ answers one question and ends with a runnable snippet.
 ## Loading input
 
 ```python
-import mypackage as mp
+import docsforge as mp
 
 values = [3.0, 1.0, 4.0, 1.0, 5.0, 9.0, 2.0, 6.0]
 report = mp.summarize(values, label="run-01")

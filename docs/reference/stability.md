@@ -6,7 +6,10 @@ policy is unwritten.
 
 ## Versioning
 
-mypackage follows [Semantic Versioning](https://semver.org):
+docsforge follows [Semantic Versioning](https://semver.org). Every release is
+described in the [GitHub release notes](https://github.com/my-org/docsforge/releases),
+which are the changelog — one place, generated from the tags, impossible to
+forget to update:
 
 | Change | Version bump |
 |---|---|
@@ -17,15 +20,14 @@ mypackage follows [Semantic Versioning](https://semver.org):
 !!! warning "Pre-1.0"
     While the version is below `1.0`, minor releases may contain breaking
     changes. They will always be listed under **Breaking changes** in the
-    [changelog](../about/changelog.md). Pin an exact version if you need
-    stability today.
+    release notes. Pin an exact version if you need stability today.
 
 ## What counts as public API
 
 **Public** — covered by the guarantees above:
 
-- Everything exported in `mypackage.__all__`.
-- The documented submodules on this site (`mypackage.core`, `mypackage.utils`).
+- Everything exported in `docsforge.__all__`.
+- The documented submodules on this site (`docsforge.core`, `docsforge.utils`).
 - The fields of `Report`, and the shape of `to_row()`.
 - Documented default values. Changing a default is a behavior change.
 
@@ -40,12 +42,12 @@ mypackage follows [Semantic Versioning](https://semver.org):
 
 1. **Announce.** The replacement ships first, in a minor release, and the old
    name starts emitting a `DeprecationWarning` naming its replacement.
-2. **Document.** The changelog records it under **Deprecations**, and the
+2. **Document.** The release notes record it under **Deprecations**, and the
    docstring gains a `.. deprecated::` note.
 3. **Wait.** A deprecated name lives for at least **two minor releases** or
    **six months**, whichever is longer.
 4. **Remove.** Removal happens only in a major release (or, pre-1.0, a minor
-   release with a changelog entry).
+   release that says so in its release notes).
 
 ```python
 import warnings
@@ -73,11 +75,11 @@ def old_name(*args, **kwargs):
 
 We support all Python versions that upstream has not end-of-lifed, currently
 **3.11–3.13**, and test each of them in CI. A new CPython release is added once
-it is stable; an old one is dropped only after EOL, in a minor release with a
-changelog note.
+it is stable; an old one is dropped only after EOL, in a minor release that
+says so in its release notes.
 
 ## Numerical results
 
 Numbers can change without the API changing. Any change to a computed result
-that is not a bug fix is treated as **breaking** and documented in the
-changelog with the reason and the expected magnitude of the difference.
+that is not a bug fix is treated as **breaking** and documented in the release
+notes with the reason and the expected magnitude of the difference.

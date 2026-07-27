@@ -1,44 +1,37 @@
----
-hide:
-  - toc
----
-
 <!-- =================================================================
      HOME PAGE
      The hero below is plain HTML + the `.site-*` classes defined in
      docs/stylesheets/extra.css. Keep the structure; swap the words.
+
+     It is deliberately spare: mark, name, one sentence, two links.
+     Badges live in the README, where they answer a stranger's first
+     questions; here they would only compete with the tagline.
      ================================================================= -->
 
 <div class="site-hero" markdown>
 
-<img class="site-hero__logo" src="logo.svg" alt="mypackage logo">
+<img class="site-hero__logo" src="logo.svg" alt="Docsforge logo">
 
-<h1 class="site-hero__title">mypackage</h1>
+<h1 class="site-hero__title">Docsforge</h1>
 
 <p class="site-hero__tagline">
 One sentence that says what this is and why it exists. Concrete beats clever —
 name the thing it does and the thing it replaces.
 </p>
 
-<p class="site-badges">
-  <img alt="python" src="https://img.shields.io/badge/python-3.11+-3987e5?style=flat-square">
-  <img alt="build" src="https://img.shields.io/badge/build-passing-3fb950?style=flat-square">
-  <img alt="license" src="https://img.shields.io/badge/MIT-c98500?style=flat-square">
-</p>
-
 [Get started](getting-started/installation.md){ .md-button .md-button--primary }
-[View on GitHub](https://github.com/my-org/mypackage){ .md-button }
+[View on GitHub](https://github.com/my-org/docsforge){ .md-button }
 
 </div>
 
-## Why mypackage
+## Why Docsforge
 
 Open with the *problem*, not the feature list. Two or three short paragraphs
 that a reader who has never heard of this project can follow: what is hard
 today, why the existing options do not solve it, and what changes if they adopt
 this.
 
-Say what it *is* in one bolded sentence — **mypackage turns X into Y** — and
+Say what it *is* in one bolded sentence — **docsforge turns X into Y** — and
 then back that claim with the one detail that makes it credible: the algorithm,
 the guarantee, the benchmark, the integration. Avoid adjectives that carry no
 information ("powerful", "seamless", "blazing fast"); a number or a mechanism
@@ -49,7 +42,7 @@ this site is one click from here.
 
 <figure markdown>
   ![Placeholder screenshot](img/placeholder.svg)
-  <figcaption>A representative output, rendered with <code>mypackage.summarize</code>.</figcaption>
+  <figcaption>A representative output, rendered with <code>docsforge.summarize</code>.</figcaption>
 </figure>
 
 ## What is inside
@@ -91,7 +84,7 @@ Generated from source docstrings, so it always matches the installed version.
 ## Quickstart
 
 ```python
-import mypackage as mp
+import docsforge as mp
 
 report = mp.summarize([3.0, 1.0, 4.0, 1.0, 5.0], label="demo")
 

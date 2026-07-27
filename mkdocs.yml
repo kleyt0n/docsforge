@@ -1,20 +1,20 @@
 # ==================================================================== #
-# Professional docs template — Material for MkDocs                     #
+# Docsforge — Material for MkDocs                                      #
 #                                                                      #
 # Placeholders replaced by `python scripts/init_template.py`:          #
-#   mypackage · My Project · my-org · Your Name                        #
+#   docsforge · Docsforge · my-org · Docsforge contributors            #
 # ==================================================================== #
 
-site_name: mypackage
+site_name: Docsforge
 site_description: >-
-  A short, punchy description of mypackage — what it does, for whom, and
+  A short, punchy description of docsforge — what it does, for whom, and
   what makes it different. Two lines at most; it lands in search results.
-site_author: mypackage contributors
-site_url: https://my-org.github.io/mypackage/
-repo_name: my-org/mypackage
-repo_url: https://github.com/my-org/mypackage
+site_author: Docsforge contributors
+site_url: https://my-org.github.io/docsforge/
+repo_name: my-org/docsforge
+repo_url: https://github.com/my-org/docsforge
 edit_uri: edit/main/docs/
-copyright: Copyright &copy; mypackage contributors — MIT License
+copyright: Copyright &copy; Docsforge contributors — MIT License
 
 docs_dir: docs
 
@@ -25,20 +25,22 @@ theme:
   icon:
     repo: fontawesome/brands/github
   font:
-    text: IBM Plex Mono
-    code: IBM Plex Mono
+    text: Google Sans Flex
+    code: Google Sans Code
+  # `custom` suppresses Material's built-in color rules, so the neutral
+  # ramp in docs/stylesheets/extra.css owns every color on the site.
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: black
-      accent: indigo
+      primary: custom
+      accent: custom
       toggle:
         icon: material/weather-night
         name: Switch to dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: black
-      accent: indigo
+      primary: custom
+      accent: custom
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
@@ -67,11 +69,17 @@ extra_javascript:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/my-org/mypackage
+      link: https://github.com/my-org/docsforge
     - icon: fontawesome/brands/python
-      link: https://pypi.org/project/mypackage/
+      link: https://pypi.org/project/docsforge/
   # Drop the "Made with Material for MkDocs" line. Set to `true` to keep it.
   generator: false
+
+# Builds the rustdoc API reference and folds it into the site during every
+# build, so `mkdocs serve` serves it too. Requires the Rust toolchain; remove
+# alongside `rust/` for a non-Rust project.
+hooks:
+  - scripts/rustdoc_hook.py
 
 # Turn silent link rot into build failures under `mkdocs build --strict`.
 validation:
@@ -105,8 +113,8 @@ markdown_extensions:
       pygments_lang_class: true
   - pymdownx.inlinehilite
   - pymdownx.keys
-  # `base_path` lets docs pages pull in repo-root files (CHANGELOG, etc.)
-  # with the `--8<--` include syntax, so they never drift out of sync.
+  # `base_path` lets docs pages pull in repo-root files (example scripts,
+  # etc.) with the `--8<--` include syntax, so they never drift out of sync.
   - pymdownx.snippets:
       base_path: [., docs]
       check_paths: true
@@ -118,6 +126,16 @@ markdown_extensions:
 
 plugins:
   - search
+  # Renders an og:image per page, so links shared in Slack, Discord, or a
+  # tweet show the page title over the site's own palette instead of a blank
+  # card. Card generation needs Cairo and friends, which is a real install on
+  # macOS and Windows — so it is off locally and on in CI, where the images
+  # that actually ship are built. `mkdocs serve` stays a one-command affair.
+  - social:
+      cards: !ENV [CI, false]
+      cards_layout_options:
+        background_color: "#212529" # --site-c-carbon-black
+        color: "#f8f9fa" # --site-c-bright-snow
   # Renders the API reference straight from source docstrings, so it can
   # never disagree with the code. Remove this block for a non-code project.
   - mkdocstrings:
@@ -154,7 +172,5 @@ nav:
       - Overview: reference/index.md
       - Core: reference/core.md
       - Utilities: reference/utils.md
-  - Project:
+      - Rust API: reference/rust.md
       - API stability: reference/stability.md
-      - Contributing: about/contributing.md
-      - Changelog: about/changelog.md

@@ -4,8 +4,8 @@ Because the docs pull this file in with the `--8<--` include syntax, and CI runs
 it, the snippet on the site can never drift away from working code.
 """
 
-import mypackage as mp
-from mypackage.utils import describe
+import docsforge as mp
+from docsforge.utils import describe
 
 series = {
     "baseline": [3.0, 1.0, 4.0, 1.0, 5.0, 9.0, 2.0, 6.0],

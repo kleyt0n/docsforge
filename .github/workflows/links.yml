@@ -1,0 +1,55 @@
+name: Links
+
+# `mkdocs build --strict` already fails on broken *internal* links. This covers
+# the other half: outbound URLs that rot on someone else's schedule.
+#
+# Deliberately not run on pull requests. A third-party 404 is not the
+# contributor's fault and should not block their merge — it is maintenance
+# work, so it arrives on a schedule and in an issue.
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # Mondays, 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write # to file/update the report issue
+
+concurrency:
+  group: links
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check links
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # `--no-progress` keeps the log readable; the excludes below drop the
+          # template's own placeholder URLs, which 404 by design until
+          # scripts/init_template.py rewrites them. Delete the exclude lines
+          # once your real org and repo are in place.
+          args: >-
+            --no-progress
+            --max-concurrency 8
+            --exclude '^https://github\.com/my-org/'
+            --exclude '^https://my-org\.github\.io/'
+            --exclude '^https://pypi\.org/project/docsforge'
+            --exclude-path rust/target
+            --exclude-path site
+            './**/*.md'
+          fail: false # the issue below is the report; a red X adds nothing
+          output: lychee/out.md
+
+      - name: Open an issue on failure
+        if: steps.lychee.outputs.exit_code != 0
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: Broken links found
+          content-filepath: lychee/out.md
+          labels: docs

@@ -20,7 +20,7 @@ name the thing it does and the thing it replaces.
 </p>
 
 [Get started](getting-started/installation.md){ .md-button .md-button--primary }
-[View on GitHub](https://github.com/my-org/docsforge){ .md-button }
+[View on GitHub](https://github.com/kleyt0n/docsforge){ .md-button }
 
 </div>
 

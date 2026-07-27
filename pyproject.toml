@@ -44,16 +44,16 @@ docs = [
     # `[imaging]` pulls in Pillow and CairoSVG for the social-cards plugin. The
     # plugin only generates cards when CI=true (see mkdocs.yml), but the Python
     # packages install everywhere, so the CI build needs no special extra.
-    "mkdocs-material[imaging]>=9.5",
-    "mkdocstrings[python]>=1.0.6",
+    "mkdocs-material[imaging]>=9.7.7",
+    "mkdocstrings[python]>=0.25",
     "pymdown-extensions>=10.0",
 ]
 
 [project.urls]
-Homepage = "https://github.com/my-org/docsforge"
-Documentation = "https://my-org.github.io/docsforge/"
-Repository = "https://github.com/my-org/docsforge"
-Issues = "https://github.com/my-org/docsforge/issues"
+Homepage = "https://github.com/kleyt0n/docsforge"
+Documentation = "https://kleyt0n.github.io/docsforge/"
+Repository = "https://github.com/kleyt0n/docsforge"
+Issues = "https://github.com/kleyt0n/docsforge/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/docsforge"]

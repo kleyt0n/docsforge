@@ -45,7 +45,7 @@ docs = [
     # plugin only generates cards when CI=true (see mkdocs.yml), but the Python
     # packages install everywhere, so the CI build needs no special extra.
     "mkdocs-material[imaging]>=9.7.7",
-    "mkdocstrings[python]>=0.25",
+    "mkdocstrings[python]>=1.0.6",
     "pymdown-extensions>=10.0",
 ]
 

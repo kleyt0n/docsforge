@@ -30,7 +30,7 @@ dependencies = []
 dev = [
     "pytest>=8.0",
     "pytest-cov>=5.0",
-    "ruff>=0.16.4",
+    "ruff>=0.16.5",
     "mypy>=2.3.1",
     "pre-commit>=4.6.2",
 ]
@@ -46,7 +46,7 @@ docs = [
     # packages install everywhere, so the CI build needs no special extra.
     "mkdocs-material[imaging]>=9.7.7",
     "mkdocstrings[python]>=0.25",
-    "pymdown-extensions>=10.0",
+    "pymdown-extensions>=11.0.2",
 ]
 
 [project.urls]

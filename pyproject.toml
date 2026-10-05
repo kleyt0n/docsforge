@@ -30,8 +30,8 @@ dependencies = []
 dev = [
     "pytest>=8.0",
     "pytest-cov>=5.0",
-    "ruff>=0.16.4",
-    "mypy>=2.3.1",
+    "ruff>=0.16.10",
+    "mypy>=2.4.0",
     "pre-commit>=4.6.2",
 ]
 # Everything the documentation site needs. `uv sync --extra docs` is enough to
